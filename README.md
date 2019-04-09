@@ -4,11 +4,8 @@ Skills used
 * HTML
 * CSS
 * JavaScript
-* DOM manipulation
-* Functional programming
-* Webpack
-* NPM scripts
+* webpack
+* npm
 * Unit testing
-* Parsing
 
 [live preview](http://zaesur.github.io/calculator)
