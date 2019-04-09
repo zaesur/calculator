@@ -47,10 +47,12 @@ const solvePostfix = function (postfixExpression) {
     const tail = postfixExpression.slice(binaryOperatorIndex + 1)
     return solvePostfix([...head, result, ...tail])
   } else {
-    return postfixExpression
+    return parseFloat(postfixExpression[0])
   }
 }
 
-export const solve = function (expression) {
+const solve = function (expression) {
   return solvePostfix(infixToPostfix(expression))
 }
+
+module.exports = solve

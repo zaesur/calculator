@@ -1,5 +1,4 @@
-/* eslint-disable space-before-function-paren */
-import { CalculatorState } from './calculator.js'
+const CalculatorState = require('./calculator.js')
 
 function render (state) {
   const display = document.querySelector('.display')
@@ -17,7 +16,7 @@ function render (state) {
   }
 }
 
-function update(symbol) {
+function update (symbol) {
   calculator = calculator.operate(symbol)
   render(calculator)
 }

@@ -7,7 +7,8 @@
     "test": "jest",
     "build": "webpack --progress --mode=production",
     "watch": "webpack --progress --mode=development --watch",
-    "server": "webpack-dev-server --open"
+    "server": "webpack-dev-server --open",
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,7 @@
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
+    "gh-pages": "^2.0.1",
     "jest": "^24.7.1",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",

@@ -1,4 +1,4 @@
-import { solve } from './parser.js'
+const solve = require('./parser.js')
 
 /* Some helper functions */
 const isDigit = s => '0123456789'.includes(s)
@@ -8,7 +8,7 @@ const isEqual = s => s === '='
 const isReset = s => s === 'AC'
 
 /* Calculator state */
-export class CalculatorState {
+class CalculatorState {
   constructor (value = '0', memory = [], action = 'init') {
     this.value = value
     this.memory = memory
@@ -54,3 +54,5 @@ export class CalculatorState {
     }
   }
 }
+
+module.exports = CalculatorState
