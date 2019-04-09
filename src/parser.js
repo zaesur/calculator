@@ -11,8 +11,7 @@ const infixToPostfix = function (infixExpression) {
     const currentPrecedence = operatorPrecedence[el]
     const precedenceLevel = operatorPrecedence[operators[0]]
     return infixExpression.length === index
-      ? [...result, ...operators]
-      : !isNaN(el)
+      ? [...result, ...operators] : !isNaN(el)
         ? iterate(index + 1, operators, [...result, el])
         : precedenceLevel >= currentPrecedence
           ? iterate(index, operators.slice(1), [...result, operators[0]])
@@ -36,7 +35,7 @@ const operate = function (operator, firstOperand, secondOperand) {
 
 const solvePostfix = function (postfixExpression) {
   // implementation for unary operators possible
-  const isBinaryOperator = c => '+-*'.includes(c)
+  const isBinaryOperator = c => '+-*/'.includes(c)
   const binaryOperatorIndex = postfixExpression.findIndex(isBinaryOperator)
   if (binaryOperatorIndex >= 2) {
     const head = postfixExpression.slice(0, binaryOperatorIndex - 2)
