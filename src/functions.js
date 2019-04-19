@@ -1,4 +1,5 @@
 const isDigit = input => '0123456789'.includes(input)
+const isDecimal = input => input === '.'
 const isOperator = input => '+-*/'.includes(input)
 const isEqual = input => input === '='
 const isClear = input => input === 'AC'
@@ -50,7 +51,20 @@ class CalculatorState {
     } else {
       return new CalculatorState(
         'digit',
-        `${this.value}${input}`,
+        `${this.value}${(this.state === 'decimal') ? '.' : ''}${input}`,
+        this.operator,
+        this.ans
+      )
+    }
+  }
+
+  evalDecimal() {
+    if (this.value.includes('.')) {
+      return this
+    } else {
+      return new CalculatorState(
+        'decimal',
+        this.value,
         this.operator,
         this.ans
       )
@@ -92,6 +106,8 @@ class CalculatorState {
   takeInput(input) {
     return (isDigit(input))
       ? this.evalDigit(input)
+      : (isDecimal(input))
+      ? this.evalDecimal()
       : (isOperator(input))
       ? this.evalOperator(input)
       : (isEqual(input))
