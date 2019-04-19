@@ -1,0 +1,86 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  --main-bg-color: #2c3e50;
+  --light-digit-color: #ecf0f1;
+  --dark-digit-color: #bdc3c7;
+  --light-op-color: #95a5a6;
+  --dark-op-color: #7f8c8d;
+  --light-eq-color: #e74c3c;
+  --dark-eq-color: #c0392b;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--main-bg-color);
+  height: 100vh;
+}
+
+.calculator {
+  background-color: var(--dark-op-color);
+  border-radius: 10px;
+  overflow: hidden;
+  display: inline-grid;
+  grid-gap: 1px;
+  grid: repeat(7, 50px) / repeat(4, 50px);
+}
+
+.calculator > div {
+  color: var(--main-bg-color);
+  text-align: center;
+  display: flex;
+  font-family: sans-serif;
+  justify-content: center;
+  align-items: center;
+}
+
+.calculator > div::selection {
+  background: transparent;
+}
+
+.calculator .display {
+  background-color: var(--light-digit-color);
+  grid-column-start: span 4;
+  grid-row-start: span 2;
+  justify-content: flex-end;
+  padding: 0 1em;
+  cursor: default;
+}
+
+.digit {
+  background-color: var(--light-digit-color);
+}
+
+.operator {
+  background-color: var(--light-op-color);
+}
+
+.equals {
+  background-color: var(--light-eq-color);
+  grid-row-start: span 2;
+}
+
+.digit:active {
+  background-color: var(--dark-digit-color);
+}
+
+.operator:active {
+  background-color: var(--dark-op-color);
+}
+
+.equals:active {
+  background-color: var(--dark-eq-color);
+}
+
+.digit:hover,
+.operator:hover,
+.equals:hover {
+  cursor: pointer;
+}
+
+.calculator :nth-child(18) {
+  grid-column-start: span 2;
+}
