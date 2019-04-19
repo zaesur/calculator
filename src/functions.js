@@ -1,6 +1,7 @@
-const isDigit = input => '0123456789'.includes(input);
-const isOperator = input => '+-*/'.includes(input);
-const isEqual = input => input === '=';
+const isDigit = input => '0123456789'.includes(input)
+const isOperator = input => '+-*/'.includes(input)
+const isEqual = input => input === '='
+const isClear = input => input === 'AC'
 
 function operate(operator, a, b) {
   const operators = {
@@ -14,10 +15,10 @@ function operate(operator, a, b) {
 
 class CalculatorState {
   constructor(state, value, operator, ans) {
-    this.state = state || 'init';
-    this.value = value || '0';
-    this.operator = operator || '+';
-    this.ans = ans || '0';
+    this.state = state || 'init'
+    this.value = value || '0'
+    this.operator = operator || '+'
+    this.ans = ans || '0'
   }
 
   evalDigit(input) {
@@ -84,6 +85,10 @@ class CalculatorState {
     }
   }
 
+  evalClear() {
+    return new CalculatorState()
+  }
+
   takeInput(input) {
     return (isDigit(input))
       ? this.evalDigit(input)
@@ -91,7 +96,9 @@ class CalculatorState {
       ? this.evalOperator(input)
       : (isEqual(input))
       ? this.evalEqual()
-      : this;
+      : (isClear(input))
+      ? this.evalClear()
+      : this
   }
 }
 
