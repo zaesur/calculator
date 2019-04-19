@@ -19,7 +19,7 @@ body {
   height: 100vh;
 }
 
-.calculator {
+#calculator {
   background-color: var(--dark-op-color);
   border-radius: 10px;
   overflow: hidden;
@@ -28,7 +28,7 @@ body {
   grid: repeat(7, 50px) / repeat(4, 50px);
 }
 
-.calculator > div {
+#calculator > div {
   color: var(--main-bg-color);
   text-align: center;
   display: flex;
@@ -37,11 +37,11 @@ body {
   align-items: center;
 }
 
-.calculator > div::selection {
+#calculator > div::selection {
   background: transparent;
 }
 
-.calculator .display {
+#calculator #display {
   background-color: var(--light-digit-color);
   grid-column-start: span 4;
   grid-row-start: span 2;
@@ -81,6 +81,6 @@ body {
   cursor: pointer;
 }
 
-.calculator :nth-child(18) {
+#calculator :nth-child(18) {
   grid-column-start: span 2;
 }

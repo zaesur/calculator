@@ -1,14 +1,14 @@
-const operate = require('./index.js');
+const functions = require('./functions.js');
 
 test('operate adds', () => {
-  expect(operate('add', 9, 2)).toBe(11);
+  expect(functions.operate('add', 10, 2)).toBe(12);
 });
 test('operate subtracts', () => {
-  expect(operate('sub', 9, 2)).toBe(7);
+  expect(functions.operate('sub', 10, 2)).toBe(8);
 });
 test('operate multiplies', () => {
-  expect(operate('mul', 9, 2)).toBe(18);
+  expect(functions.operate('mul', 10, 2)).toBe(20);
 });
 test('operate divides', () => {
-  expect(operate('div', 9, 2)).toBe(4.5);
+  expect(functions.operate('div', 10, 2)).toBe(5);
 });

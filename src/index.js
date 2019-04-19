@@ -1,11 +1,15 @@
-function operate(operator, a, b) {
-  const operators = {
-    add: (x, y) => x + y,
-    sub: (x, y) => x - y,
-    mul: (x, y) => x * y,
-    div: (x, y) => x / y,
-  };
-  return operators[operator](a, b);
+const functions = require('./functions.js');
+
+let calculator = new functions.CalculatorState()
+
+function render() {
+  const newText = (calculator.state === 'error') ? 'div by zero!' : calculator.value;
+  document.getElementById('display').textContent = newText
 }
 
-module.exports = operate;
+document
+  .getElementById('calculator')
+  .addEventListener('click', (e) => {
+    calculator = calculator.takeInput(e.target.textContent)
+    render();
+  });
