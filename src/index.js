@@ -1,29 +1,30 @@
-const CalculatorState = require('./calculator.js')
+const functions = require('./functions.js');
 
-function render (state) {
-  const display = document.querySelector('.display')
-  switch (state.action) {
-    case 'init':
-    case 'digit':
-      display.textContent = state.value
-      break
-    case 'equal':
-      display.textContent = state.memory[0]
-      break
-    case 'divbyzero':
-      display.textContent = 'Division by zero!'
-      break
+let calculator = new functions.CalculatorState()
+
+function render() {
+  if (calculator.state !== 'digit') {
+    document
+      .querySelectorAll('#calculator .operator')
+      .forEach((e) => e.classList.remove('active'))
   }
+  if (calculator.state === 'operator') {
+    document
+      .querySelectorAll('#calculator .operator')
+      .forEach((e) => {
+        if (calculator.operator === e.textContent) {
+          e.classList.add('active')
+        }
+      })
+  }
+  document
+    .getElementById('display')
+    .textContent = (calculator.state === 'error') ? '💥' : calculator.value
 }
-
-function update (symbol) {
-  calculator = calculator.operate(symbol)
-  render(calculator)
-}
-
-let calculator = new CalculatorState()
 
 document
-  .querySelector('.calculator')
-  .addEventListener('click', e => update(e.target.textContent))
-window.addEventListener('keypress', k => update(k.key))
+  .getElementById('calculator')
+  .addEventListener('click', (e) => {
+    calculator = calculator.takeInput(e.target.textContent)
+    render()
+  });
