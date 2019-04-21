@@ -67,7 +67,8 @@ body {
   background-color: var(--dark-digit-color);
 }
 
-.operator:active {
+.operator:active,
+.operator.active {
   background-color: var(--dark-op-color);
 }
 
