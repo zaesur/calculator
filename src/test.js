@@ -95,3 +95,18 @@ test('calculator correctly evaluates mixed precedence in long sequences', () => 
   ['1', '-', '2', '*', '3', '+', '5', '='].forEach((e) => calc = calc.takeInput(e))
   expect(calc.value).toBe(0)
 })
+test('calculator correctly evaluates sequential calculations', () => {
+  let calc = new functions.CalculatorState();
+  ['1', '+', '2', '=', '*', '3', '='].forEach((e) => calc = calc.takeInput(e))
+  expect(calc.value).toBe(9)
+})
+test('calculator doubles operand when no new number is given', () => {
+  let calc = new functions.CalculatorState();
+  ['1', '+', '='].forEach((e) => calc = calc.takeInput(e))
+  expect(calc.value).toBe(2)
+})
+test('calculator repeats calculations', () => {
+  let calc = new functions.CalculatorState();
+  ['1', '+', '2', '=', '=', '='].forEach((e) => calc = calc.takeInput(e))
+  expect(calc.value).toBe(7)
+})
