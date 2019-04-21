@@ -3,13 +3,20 @@ const isOperator = input => '+-*/'.includes(input)
 const isEqual = input => input === '='
 const isClear = input => input === 'AC'
 
+const operatorPrecedence = {
+  '+': 1,
+  '-': 1,
+  '*': 2,
+  '/': 2
+}
+
 function operate(operator, a, b) {
   const operators = {
     '+': (x, y) => x + y,
     '-': (x, y) => x - y,
     '*': (x, y) => x * y,
     '/': (x, y) => x / y,
-  };
+  }
   return operators[operator](a, b);
 }
 
@@ -22,15 +29,8 @@ function calculate(operands, operators) {
   }
 }
 
-const operatorPrecedence = {
-  '+': 1,
-  '-': 1,
-  '*': 2,
-  '/': 2
-}
-
 class CalculatorState {
-  constructor(state = 'init', value = '0', memory = [], operators = ['+']) {
+  constructor(state = 'init', value = '0', memory = [], operators = []) {
     this.state = state
     this.value = value
     this.memory = memory
@@ -42,9 +42,16 @@ class CalculatorState {
   }
 
   evalDigit(input) {
-    if (this.state === 'error' || (input === '.' && this.value.includes('.'))) {
+    if (this.state === 'error') {
       return this
-    } else if (this.state === 'operator' || this.state === 'init') {
+    } else if (this.state === 'init') {
+      return new CalculatorState(
+        'digit',
+        (input === '.') ? `0${input}` : input,
+        this.memory,
+        this.operators
+      )
+    } else if (this.state === 'operator') {
       return new CalculatorState(
         'digit',
         (input === '.') ? `0${input}` : input,
@@ -61,7 +68,7 @@ class CalculatorState {
     } else {
       return new CalculatorState(
         'digit',
-        `${this.value}${input}`,
+        (input === '.' && this.value.includes('.')) ? this.value : `${this.value}${input}`,
         this.memory,
         this.operators
       )
@@ -70,15 +77,17 @@ class CalculatorState {
   
   evalOperator(input) {
     if (this.state === 'error') {
-      return this;
-    } else if (this.state === 'operator' || this.state === 'init') {
+      return this
+    } else if (this.state === 'operator' || this.state === 'init' ) {
+      // Replace operator if existent
       return new CalculatorState(
         'operator',
         this.value,
         this.memory,
-        [input, this.operators.slice(1)],
+        [input, ...this.operators.slice(1)],
       )
-    } else if (operatorPrecedence[input] < operatorPrecedence[this.operators[0]]) {
+    } else if (operatorPrecedence[input] <= operatorPrecedence[this.operators[0]]) {
+      // Calculate the result immediately
       return new CalculatorState(
         'operator',
         calculate([...this.memory, parseFloat(this.value)], this.operators),
@@ -86,6 +95,7 @@ class CalculatorState {
         [input]
       )
     } else {
+      // Push the operator on the stack
       return new CalculatorState(
         'operator',
         this.value,
@@ -96,21 +106,31 @@ class CalculatorState {
   }
   
   evalEqual() {
-    if (this.state === 'error' || this.state === 'equal' || this.state === 'init') {
+    if (this.state === 'error' || this.state === 'init' || !this.operators.length) {
       return this
     } else if (this.state === 'operator') {
+      // Use the current value as second operand when no value is entered after operator
       return new CalculatorState(
         'equal',
         calculate([...this.memory, parseFloat(this.value), parseFloat(this.value)], this.operators),
-        [],
-        []
+        [...this.memory, parseFloat(this.value)],
+        this.operators
+      )
+    } else if (this.state === 'equal') {
+      // Redo previous operation on current value if equal is pressed repeatedly
+      return new CalculatorState(
+        'equal',
+        calculate([parseFloat(this.value), ...this.memory], this.operators),
+        this.memory,
+        this.operators
       )
     } else {
+      // Calculate the result
       return new CalculatorState(
         'equal',
         calculate([...this.memory, parseFloat(this.value)], this.operators),
-        [],
-        []
+        [parseFloat(this.value)],
+        [this.operators[0]]
       )
     }
   }
