@@ -78,6 +78,13 @@ class CalculatorState {
   evalOperator(input) {
     if (this.state === 'error') {
       return this
+    } else if (this.state === 'equal') {
+      return new CalculatorState(
+        'operator',
+        this.value,
+        [],
+        [input]
+      )
     } else if (this.state === 'operator' || this.state === 'init' ) {
       // Replace operator if existent
       return new CalculatorState(
@@ -108,6 +115,8 @@ class CalculatorState {
   evalEqual() {
     if (this.state === 'error' || this.state === 'init' || !this.operators.length) {
       return this
+    } else if (this.value === '0' || this.value === '0.' && this.operators[0] === '/') {
+      return new CalculatorState('error')
     } else if (this.state === 'operator') {
       // Use the current value as second operand when no value is entered after operator
       return new CalculatorState(
