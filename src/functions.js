@@ -63,7 +63,7 @@ class CalculatorState {
     } else {
       return new CalculatorState(
         'operator',
-        this.value,
+        `${operate(this.operator, parseFloat(this.ans), parseFloat(this.value))}`,
         input,
         this.ans,
       )
