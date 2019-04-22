@@ -4,11 +4,13 @@ let calculator = new functions.CalculatorState()
 
 function render() {
   if (calculator.state !== 'digit') {
+    // Clear the active operator
     document
       .querySelectorAll('#calculator .operator')
       .forEach((e) => e.classList.remove('active'))
   }
   if (calculator.state === 'operator') {
+    // Activate the operator
     document
       .querySelectorAll('#calculator .operator')
       .forEach((e) => {
@@ -17,6 +19,7 @@ function render() {
         }
       })
   }
+  // Finally, render the current value or error
   document
     .getElementById('display')
     .textContent = (calculator.state === 'error') ? '💥' : calculator.value
