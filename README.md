@@ -6,6 +6,6 @@ Skills used
 * JavaScript
 * webpack
 * npm
-* Unit testing
+* Jest
 
 [live preview](http://zaesur.github.io/calculator)

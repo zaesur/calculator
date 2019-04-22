@@ -22,7 +22,7 @@ function operate(operator, a, b) {
 
 function calculate(operands, operators) {
   if (operators.length) {
-    const result = operate(operators[0], operands.slice(-2)[0], operands.slice(-1)[0])
+    const result = operate(operators[0], ...operands.slice(-2))
     return calculate([...operands.slice(0,-2), result], operators.slice(1))
   } else {
     return operands[0]
