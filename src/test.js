@@ -1,35 +1,42 @@
+require('jasmine-check').install()
 const functions = require('./functions.js')
 
-test('operate adds', () => {
-  expect(functions.operate('+', 10, 2)).toBe(12)
+describe('operate', () => {
+  check.it('adds two numbers', gen.int, gen.int, (x, y) => {
+    expect(functions.operate('+', x, y)).toEqual(x + y)
+  })
+  check.it('subtracts two numbers', gen.int, gen.int, (x, y) => {
+    expect(functions.operate('-', x, y)).toEqual(x - y)
+  })
+  check.it('multiplies two numbers', gen.int, gen.int, (x, y) => {
+    expect(functions.operate('*', x, y)).toEqual(x * y)
+  })
+  check.it('divides two numbers', gen.int, gen.int, (x, y) => {
+    expect(functions.operate('/', x, y)).toEqual(x / y)
+  })
 })
-test('operate subtracts', () => {
-  expect(functions.operate('-', 10, 2)).toBe(8)
+
+describe('calculate', () => {
+  check.it('returns a single number', gen.int, (x) => {
+    expect(functions.calculate([x], [])).toEqual(x)
+  })
+  check.it('returns the addition of numbers', gen.int, gen.int, (x, y) => {
+    expect(functions.calculate([x, y], ['+'])).toEqual(x + y)
+  })
+  check.it('returns the subtraction of numbers', gen.int, gen.int, (x, y) => {
+    expect(functions.calculate([x, y], ['-'])).toEqual(x - y)
+  })
+  check.it('returns the multiplication of numbers', gen.int, gen.int, (x, y) => {
+    expect(functions.calculate([x, y], ['*'])).toEqual(x * y)
+  })
+  check.it('returns the division of numbers', gen.int, gen.int, (x, y) => {
+    expect(functions.calculate([x, y], ['/'])).toEqual(x / y)
+  })
+  check.it('works right to left', gen.int, gen.int, gen.int, (a,b,c) => {
+    expect(functions.calculate([a, b, c], ['+', '*'])).toEqual((c + b) * a)
+  })
 })
-test('operate multiplies', () => {
-  expect(functions.operate('*', 10, 2)).toBe(20)
-})
-test('operate divides', () => {
-  expect(functions.operate('/', 10, 2)).toBe(5)
-})
-test('calculate returns a single number', () => {
-  expect(functions.calculate([1], [])).toBe(1)
-})
-test('calculate returns addition', () => {
-  expect(functions.calculate([10,2], ['+'])).toBe(12)
-})
-test('calculate returns subtraction', () => {
-  expect(functions.calculate([10,2], ['-'])).toBe(8)
-})
-test('calculate returns multiplication', () => {
-  expect(functions.calculate([10,2], ['*'])).toBe(20)
-})
-test('calculate returns division', () => {
-  expect(functions.calculate([10,2], ['/'])).toBe(5)
-})
-test('works right to left', () => {
-  expect(functions.calculate([10,4,3,2,1], ['+', '+', '+', '-'])).toBe(0)
-})
+
 test('calculator stores a digit', () => {
   let calc = new functions.CalculatorState();
   ['5'].forEach((e) => calc = calc.takeInput(e))
