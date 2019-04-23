@@ -1,0 +1,17 @@
+env:
+  browser: true
+  es6: true
+  jest: true
+  jasmine: true
+extends: 'eslint:recommended'
+plugins:
+  - jasmine
+globals:
+  Atomics: readonly
+  SharedArrayBuffer: readonly
+  check: false
+  gen: false
+parserOptions:
+  ecmaVersion: 2018
+  sourceType: module
+rules: {}
