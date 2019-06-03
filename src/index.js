@@ -31,3 +31,9 @@ document
     calculator = calculator.takeInput(e.target.textContent)
     render()
   });
+
+window
+  .addEventListener('keydown', (e) => {
+    calculator = calculator.takeInput(e.keyCode === 8 ? 'AC' : e.key)
+    render()
+  });
